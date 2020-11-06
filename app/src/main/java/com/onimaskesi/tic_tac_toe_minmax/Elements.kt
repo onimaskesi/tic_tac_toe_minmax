@@ -1,13 +1,9 @@
 package com.onimaskesi.tic_tac_toe_minmax
 
-import android.app.Application
+class Elements( _USER : Char = 'O', _COMPUTER : Char = 'X', _EMPTY : Char = ' ') {
 
-class Elements : Application() {
-
-    var EMPTY = ' '
-        private set
-
-    var USER = 'O'
-    var COMPUTER = 'X'
+    var EMPTY : Char = _EMPTY
+    var USER : Char = _USER
+    var COMPUTER : Char = _COMPUTER
 
 }

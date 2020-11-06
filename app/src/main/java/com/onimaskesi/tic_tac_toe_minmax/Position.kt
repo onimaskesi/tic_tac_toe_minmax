@@ -1,8 +1,6 @@
 package com.onimaskesi.tic_tac_toe_minmax
 
-class Position() {
-
-    var elements = Elements()
+class Position(val elements : Elements) {
 
     var score : Int = 0
     var positionArray = CharArray(9){elements.EMPTY}

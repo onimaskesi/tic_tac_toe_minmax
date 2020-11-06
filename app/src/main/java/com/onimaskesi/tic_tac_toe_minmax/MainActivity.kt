@@ -10,20 +10,27 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity() : AppCompatActivity() {
 
-    var currentPosition = Position()
-    val elements = Elements()
-    val USER = elements.USER
-    val COMPUTER = elements.COMPUTER
+    lateinit var currentPosition : Position
+    lateinit var elements : Elements
+    var USER : Char = '\u0000'
+    var COMPUTER : Char = '\u0000'
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        elements = Elements()
+        //elements = Elements('♦','♥', '☺')
+        USER = elements.USER
+        COMPUTER = elements.COMPUTER
+        currentPosition = Position(elements)
+        fillGame(currentPosition.positionArray)
         //positionTest("OOXX O  X")
         //positionTest("O   O   X")
 
+
     }
-    
+
     fun button1click(view : View){
         buttonClick(button1 , 0)
     }
@@ -102,7 +109,7 @@ class MainActivity() : AppCompatActivity() {
 
         fillGame(newPosition.positionArray)
         newPosition.childArray.clear()
-        newPosition.parent = Position()
+        newPosition.parent = Position(elements)
         newPosition.score = 0
         newPosition.whoesTour = null
         currentPosition = newPosition
@@ -149,7 +156,7 @@ class MainActivity() : AppCompatActivity() {
     }
 
     fun finishGame(){
-        currentPosition = Position()
+        currentPosition = Position(elements)
         fillGame(currentPosition.positionArray)
 
         button1.isClickable = true
@@ -186,7 +193,7 @@ class MainActivity() : AppCompatActivity() {
 
                 copyCurrentPosition[box_index] = whoseTour
 
-                val newPosition = Position()
+                val newPosition = Position(elements)
                 newPosition.positionArray = copyCurrentPosition
 
                 newPosition.parentOlustur(currentPosition)
@@ -266,7 +273,7 @@ class MainActivity() : AppCompatActivity() {
     fun getMaxScoreMove(position : Position) : Position{
 
         var max = -100
-        var move = Position()
+        var move = Position(elements)
         for(position in position.childArray){
             if(position.score > max){
                 max = position.score
