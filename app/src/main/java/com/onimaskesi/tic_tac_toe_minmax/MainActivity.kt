@@ -14,20 +14,48 @@ class MainActivity() : AppCompatActivity() {
     lateinit var elements : Elements
     var USER : Char = '\u0000'
     var COMPUTER : Char = '\u0000'
+    lateinit var userName : String
+    var computerScore = 0
+    var userScore = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        elements = Elements()
-        //elements = Elements('♦','♥', '☺')
-        USER = elements.USER
-        COMPUTER = elements.COMPUTER
-        currentPosition = Position(elements)
-        fillGame(currentPosition.positionArray)
+        val user = intent.getCharExtra("user",'X')
+        userName = intent.getStringExtra("userName").toString()
+
+        userNameTV.text = userName.toUpperCase()
+
+        startTheGame(user)
+
+        //elements = Elements()
         //positionTest("OOXX O  X")
         //positionTest("O   O   X")
 
+
+    }
+
+    fun createGamers(user : Char){
+
+        elements = Elements(user)
+        //elements = Elements('♦','♥', '☺')
+        USER = elements.USER
+        COMPUTER = elements.COMPUTER
+
+        userSign.text = "(${USER})"
+        computerSign.text = "(${COMPUTER})"
+
+    }
+
+    fun startTheGame(user : Char){
+
+        createGamers(user)
+        currentPosition = Position(elements)
+        fillGame(currentPosition.positionArray)
+        if(user == 'O'){
+            makeMove(COMPUTER)
+        }
 
     }
 
@@ -67,7 +95,9 @@ class MainActivity() : AppCompatActivity() {
 
             createnewPosition(currentPosition)
 
-            makeMove(COMPUTER)
+            if(isThereAnyEmptySpace()){
+                makeMove(COMPUTER)
+            }
 
         } else {
 
@@ -79,6 +109,13 @@ class MainActivity() : AppCompatActivity() {
     fun playAgainClick(view : View){
         textView.text = ""
         finishGame()
+        if(USER == 'O'){
+            USER = 'X'
+        } else {
+            elements.USER = 'O'
+            USER = elements.USER
+        }
+        startTheGame(USER)
     }
 
     fun fillGame(array : CharArray){
@@ -119,55 +156,88 @@ class MainActivity() : AppCompatActivity() {
             finishGame()
         }
          */
+        isGameFin()
 
-        when (isGameFin()) {
-            1 -> textView.text = "Computer Win!"
-            2 -> textView.text = "You Win!"
-            0 -> textView.text = "TIE!"
+    }
+
+    fun scoreUpdate(score : Int){
+
+        if(score == 1){
+            computerScore += 1
+            computerScoreTV.text = computerScore.toString()
+        }
+        if(score == -1){
+            userScore += 1
+            userScoreTV.text = userScore.toString()
         }
     }
 
-    fun isGameFin(): Int { // 1 ise Comp kazanır, -1 ise User kazanır, 0 beraberlik, 7 devam
+    fun isGameFin() {
 
-        // oyun bitti mi
-        //kazanan var mı
         giveScoreThePosition(currentPosition)
-        if(currentPosition.score == 1 || currentPosition.score == -1){
 
-            return currentPosition.score
+        val score = currentPosition.score
+
+        when (score) {
+            1 -> textView.text = "Computer Win!"
+            -1 -> textView.text = "You Win!"
+        }
+
+        if(score == 1 || score == -1){
+
+            scoreUpdate(score)
+            buttonsClickable(false)
+
+        } else {
+
+            if(!isThereAnyEmptySpace()){
+                buttonsClickable(false)
+                textView.text = "TIE!"
+            }
 
         }
 
-        //boş yer kaldı mı
-        var bosYerKalmamis = true
+
+
+    }
+
+    fun isThereAnyEmptySpace() : Boolean {
+
+
         for (box in currentPosition.positionArray){
+
             if(box == elements.EMPTY){
-                bosYerKalmamis = false
+
+                return true
+
             }
         }
-        if(bosYerKalmamis){
 
-            return 0
+        return false
 
-        }
-
-        return 7
 
     }
+
 
     fun finishGame(){
         currentPosition = Position(elements)
         fillGame(currentPosition.positionArray)
 
-        button1.isClickable = true
-        button2.isClickable = true
-        button3.isClickable = true
-        button4.isClickable = true
-        button5.isClickable = true
-        button6.isClickable = true
-        button7.isClickable = true
-        button8.isClickable = true
-        button9.isClickable = true
+        buttonsClickable(true)
+
+    }
+
+    fun buttonsClickable(boolean: Boolean){
+
+        button1.isClickable = boolean
+        button2.isClickable = boolean
+        button3.isClickable = boolean
+        button4.isClickable = boolean
+        button5.isClickable = boolean
+        button6.isClickable = boolean
+        button7.isClickable = boolean
+        button8.isClickable = boolean
+        button9.isClickable = boolean
 
     }
 
