@@ -52,10 +52,11 @@ class MainActivity() : AppCompatActivity() {
 
         createGamers(user)
         currentPosition = Position(elements)
-        fillGame(currentPosition.positionArray)
         if(user == 'O'){
-            makeMove(COMPUTER)
+            //makeMove(COMPUTER)
+            currentPosition.positionArray = "X        ".toCharArray()
         }
+        fillGame(currentPosition.positionArray)
 
     }
 

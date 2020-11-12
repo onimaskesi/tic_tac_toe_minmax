@@ -35,7 +35,7 @@ class HomePage : AppCompatActivity() {
     fun buttonGoClick(view: View){
 
 
-        if(userName.text.toString() == null || userName.text.toString() == ""){
+        if(userName.text.toString() == ""){
             userName.setText("USER")
         }
         _userName = userName.text.toString()

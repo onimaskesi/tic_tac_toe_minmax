@@ -11,11 +11,13 @@
     android:background="@color/black">
 
     <LinearLayout
+        android:id="@+id/scoreLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toTopOf="@id/linearLayout"
         android:orientation="horizontal"
         android:background="@drawable/button_style"
@@ -117,10 +119,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/playAgain"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/scoreLayout">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -242,12 +244,12 @@
         android:id="@+id/playAgain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
         android:onClick="playAgainClick"
         android:text="NEXT GAME"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        android:layout_margin="15dp"
         app:layout_constraintVertical_bias="0.0"
         android:background="@drawable/button_style"
         android:textColor="@color/white"
@@ -257,15 +259,15 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="59dp"
+        android:layout_margin="15dp"
         android:text=""
         android:textStyle="bold"
         android:textSize="20dp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
